@@ -6,8 +6,12 @@ Route::get('/', 'TestController@welcome');
 
 Auth::routes();
 
+Route::get('/search', 'SearchController@show'); //buscar producto
+Route::get('/products/json', 'SearchController@data'); //data buscador predictivo
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/products/{id}', 'ProductController@show'); //mostrar producto
+Route::get('/categories/{category}', 'CategoryController@show'); //mostrar producto categoria
 
 Route::post('/cart', 'CartDetailController@store'); //registrar
 Route::delete('/cart', 'CartDetailController@destroy'); //eliminar producto
@@ -27,4 +31,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
     Route::post('/products/{id}/images', 'ImageController@store'); //registrar
     Route::delete('/products/{id}/images', 'ImageController@destroy'); //formulario eliminar
     Route::get('/products/{id}/images/select/{imagen}', 'ImageController@select'); //destacar imagen
+
+    Route::get('/categories', 'CategoryController@index'); //listado
+    Route::get('/categories/create', 'CategoryController@create'); //formulario
+    Route::post('/categories', 'CategoryController@store'); //registrar
+    Route::get('/categories/{category}/edit', 'CategoryController@edit'); //formulario edición
+    Route::post('/categories/{category}/edit', 'CategoryController@update'); //actualizar
+    Route::delete('/categories/{category}', 'CategoryController@destroy'); //formulario eliminar
 });

@@ -6,7 +6,7 @@
 	<link rel="icon" type="image/png" href="../assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>@yield('title', 'App Shop')</title>
+	<title>@yield('title', config('app.name'))</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
@@ -33,7 +33,7 @@
 		            <span class="icon-bar"></span>
 		            <span class="icon-bar"></span>
         		</button>
-        		<a class="navbar-brand" href="{{ url('/') }}">App Shop</a>
+        		<a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name') }}</a>
         	</div>
 
         	<div class="collapse navbar-collapse" id="navigation-example">
@@ -54,6 +54,9 @@
 								</li>
 								@if(auth()->user()->admin)
 								<li>
+									<a href="{{ url('/admin/categories') }}">Gestionar categorías</a>
+								</li>
+								<li>
 									<a href="{{ url('/admin/products') }}">Gestionar productos</a>
 								</li>
 								@endif
@@ -61,7 +64,7 @@
                                     <a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
-                                        Desconectarse
+                                        Cerrar sesión
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -108,5 +111,6 @@
 
 	<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
 	<script src="{{ asset('/js/material-kit.js') }}" type="text/javascript"></script>
-
+	@yield('scripts')
+	
 </html>

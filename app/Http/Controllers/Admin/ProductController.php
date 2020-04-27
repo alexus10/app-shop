@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductImage;
@@ -17,7 +18,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('admin.products.create'); //formulario de registro
+        $categories = Category::orderBy('name')->get();
+        return view('admin.products.create')->with(compact('categories')); //formulario de registro
     }
     
     public function store(Request $request)
@@ -47,6 +49,7 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->long_description = $request->input('long_description');
         $product->price = $request->input('price');
+        $product->category_id = $request->category_id;
         $product->save(); //Insert
 
         return redirect('/admin/products');
@@ -54,8 +57,9 @@ class ProductController extends Controller
 
     public function edit($id)
     {
+        $categories = Category::orderBy('name')->get();
         $product = Product::find($id);
-        return view('admin.products.edit')->with(compact('product')); //formulario de edición
+        return view('admin.products.edit')->with(compact('product', 'categories')); //formulario de edición
     }
     
     public function update(Request $request, $id)
@@ -85,6 +89,7 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->long_description = $request->input('long_description');
         $product->price = $request->input('price');
+        $product->category_id = $request->category_id;
         $product->save(); //Update
 
         return redirect('/admin/products');
