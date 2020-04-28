@@ -30,7 +30,7 @@ class Product extends Model
             return $featureImage->url;
         }
 
-        return '/images/products/default.png';
+        return '/images/default.png';
     }
 
     public function getCategoryNameAttribute()
